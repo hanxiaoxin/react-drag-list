@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.ex-item {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  height: 90px;
+  cursor: pointer;;
+  border: 3px solid purple;
+  box-shadow: 2px -2px 0 -3px;
+  padding: 10px 10px;
+  margin: 20px;
+}
+
+.isDragging {
+  opacity: 0.2;
+}

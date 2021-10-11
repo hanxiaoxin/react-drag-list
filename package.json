@@ -1,6 +1,6 @@
 {
   "name": "react-drag-list",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "antd": "^4.16.13",
     "babel-loader": "^8.2.2",
     "css-loader": "^6.3.0",
     "file-loader": "^6.2.0",
@@ -32,5 +33,10 @@
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "eventemitter3": "^4.0.7",
+    "lodash": "^4.17.21"
   }
 }

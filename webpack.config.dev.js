@@ -14,27 +14,21 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /.(js|jsx|ts|tsx)$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
             {
-                test: /.(scss|css)$/,
-                exclude: /node_modules/,
+                test: /\.(scss|css)$/,
+                include: [
+                    path.resolve(__dirname, 'example'),
+                    path.resolve(__dirname, 'src'),
+                    path.resolve(__dirname, 'node_modules', 'antd'),
+                ],
                 use: [
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true,
-                            modules: false
-                        }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    }
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
                 ]
             },
             {
