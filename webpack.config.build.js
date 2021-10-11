@@ -10,7 +10,8 @@ module.exports = {
         path: path.resolve(__dirname, './dist'),
         publicPath: "./",
         filename: 'index.js',
-        clean: true
+        clean: true,
+        libraryTarget: "commonjs"
     },
     module: {
         rules: [

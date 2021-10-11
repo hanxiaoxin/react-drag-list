@@ -2,7 +2,6 @@ import React from "react";
 import DragLogic, {Point} from "./DragLogic";
 import {DragItem} from "./DragItem";
 import ReactDOM from "react-dom";
-import _ from "lodash";
 
 export interface DraggingProps {
     logic: DragLogic
@@ -19,7 +18,16 @@ export class DraggingItem extends React.Component<DraggingProps, DraggingState> 
 
     public current: DragItem| undefined;
 
-    public remeberCurrent: DragItem| undefined;
+    public rememberDrag = {
+        offset: {
+            x: 0,
+            y: 0
+        },
+        dragStart: {
+            x: 0,
+            y: 0
+        }
+    };
 
     constructor(props: DraggingProps) {
         super(props);
@@ -44,7 +52,10 @@ export class DraggingItem extends React.Component<DraggingProps, DraggingState> 
             current: current.props.children
         });
         this.current = current;
-        this.remeberCurrent = _.cloneDeep(current);
+        this.rememberDrag.offset.x = current.offset.x;
+        this.rememberDrag.offset.y = current.offset.y;
+        this.rememberDrag.dragStart.x = current.dragStart.x;
+        this.rememberDrag.dragStart.y = current.dragStart.y;
         this.props.logic.currentDragItem = current;
         this.setPosition(current.offset);
     }
@@ -62,12 +73,13 @@ export class DraggingItem extends React.Component<DraggingProps, DraggingState> 
     }
 
     handleMove(e: MouseEvent) {
-        if(this.current &&this.remeberCurrent&& this.current.isDragging) {
+        if(this.current && this.current.isDragging) {
            const target = e.target as HTMLElement;
            const newPosition = {
-                x: this.remeberCurrent.offset.x + (e.clientX - this.remeberCurrent.dragStart.x),
-                y: this.remeberCurrent.offset.y + (e.clientY - this.remeberCurrent.dragStart.y)
+                x: this.rememberDrag.offset.x + (e.clientX - this.rememberDrag.dragStart.x),
+                y: this.rememberDrag.offset.y + (e.clientY - this.rememberDrag.dragStart.y)
            };
+           // console.log(newPosition)
            this.setPosition(newPosition);
            const domRect = target.getBoundingClientRect();
            this.props.logic.emit('draggingMove', domRect);

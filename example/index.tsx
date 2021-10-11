@@ -4,21 +4,9 @@ import {DragList} from '../index';
 import './index.scss';
 import { Button } from 'antd';
 import 'antd/dist/antd.css';
-
-const items = [
-    {id: 1, name: 'a'},
-    {id: 2, name: 'b'},
-    {id: 3, name: 'c'},
-    {id: 4, name: 'd'},
-];
-
-const itemRender = (item: any) => {
-    return <div className='ex-item'>
-        <Button>{item.name}</Button>
-    </div>;
-}
+import DemoHook from "./demoHook";
 
 ReactDOM.render(
-    <DragList itemRender={itemRender} items={items}/>,
+    <DemoHook/>,
     document.getElementById('app')
 );

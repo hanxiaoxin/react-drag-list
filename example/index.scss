@@ -12,9 +12,20 @@
   border: 3px solid purple;
   box-shadow: 2px -2px 0 -3px;
   padding: 10px 10px;
-  margin: 20px;
+  //margin: 20px;
 }
 
 .nankle-rdl-is-dragging {
   opacity: 0.2;
+}
+
+.demo-img {
+  width: 200px;
+  height: 200px;
+}
+
+.demo {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
 }
