@@ -1,6 +1,6 @@
 {
   "name": "@nankle/react-drag-list",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "private": false,
@@ -9,7 +9,7 @@
     "build": "webpack --config webpack.config.build.js"
   },
   "files": [
-    "src"
+    "dist"
   ],
   "author": "hanxiaoxin",
   "license": "ISC",
