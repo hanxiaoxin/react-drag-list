@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {DragList} from '../src';
+import {DragList} from '../index';
 import './index.scss';
 import { Button } from 'antd';
 import 'antd/dist/antd.css';

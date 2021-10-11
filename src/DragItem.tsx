@@ -87,9 +87,9 @@ export class DragItem extends React.Component<DragItemProps, DragItemState>{
     }
 
     render() {
-        const classes = ['rdl-item'];
+        const classes = ['nankle-rdl-item'];
         if(this.state.isDragging) {
-            classes.push('isDragging');
+            classes.push('nankle-rdl-is-dragging');
         }
         const classnames = classes.join(' ');
         return <div className={classnames} onMouseDown={this.handleMouseDown} onMouseOver={this.handleMouseOver} style={this.style}>
