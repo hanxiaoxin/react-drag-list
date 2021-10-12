@@ -13,7 +13,6 @@ export interface DragItemState {
 }
 
 export class DragItem extends React.Component<DragItemProps, DragItemState>{
-    public offset: Point = {x: 0, y: 0};
     public dragStart: Point = {x: 0, y: 0};
     public rect = {width: 0, height: 0,left: 0, top: 0};
     public area = 0;
@@ -41,8 +40,6 @@ export class DragItem extends React.Component<DragItemProps, DragItemState>{
         const element = ReactDOM.findDOMNode(this) as HTMLElement;
         if(element) {
             const rect = element.getBoundingClientRect();
-            this.offset.x = rect.x ;
-            this.offset.y = rect.y;
             this.rect.width = rect.width;
             this.rect.height = rect.height;
             this.rect.left = rect.left;
@@ -60,8 +57,6 @@ export class DragItem extends React.Component<DragItemProps, DragItemState>{
         const element = ReactDOM.findDOMNode(this) as HTMLElement;
         if(element) {
             const rect = element.getBoundingClientRect();
-            this.offset.x = rect.x ;
-            this.offset.y = rect.y;
             this.rect.width = rect.width;
             this.rect.height = rect.height;
             this.rect.left = rect.left;

@@ -7,6 +7,8 @@ import 'antd/dist/antd.css';
 import DemoHook from "./demoHook";
 
 ReactDOM.render(
-    <DemoHook/>,
+    <div className='apps'>
+        <DemoHook/>
+    </div>,
     document.getElementById('app')
 );
