@@ -1,6 +1,6 @@
 {
   "name": "@nankle/react-drag-list",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "",
   "main": "dist/index.js",
   "private": false,

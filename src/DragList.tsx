@@ -11,7 +11,7 @@ export interface DragItemModel {
 export interface DragListProps {
     mode: 'vertical' | 'horizontal';
     classNames: string[];
-    itemRender(item: DragItemModel): React.ReactElement;
+    itemRenderer(item: DragItemModel): React.ReactElement;
     items: DragItemModel[],
     children: any[];
     onChange?: (items: DragItemModel[]) => void;
@@ -58,6 +58,14 @@ export class DragList extends React.Component<DragListProps, DragListState>{
         };
     }
 
+    componentDidUpdate(prevProps: Readonly<DragListProps>, prevState: Readonly<DragListState>, snapshot?: any) {
+        if(prevProps.items !== this.props.items) {
+           this.setState({
+               items: this.props.items
+           });
+        }
+    }
+
     componentDidMount() {
         const currentDOM = ReactDOM.findDOMNode(this) as HTMLElement;
         if(currentDOM) {
@@ -67,10 +75,10 @@ export class DragList extends React.Component<DragListProps, DragListState>{
     }
 
     handleDraggingMove(rect: DOMRect) {
-        this.handleDraggingUp(rect);
+        this.handleDraggingUp(rect, false);
     }
 
-    handleDraggingUp(rect: DOMRect) {
+    handleDraggingUp(rect: DOMRect, emit: boolean = true) {
         const current = this.logic.currentDragItem;
         if(this.logic.dragItems.length > 1) {
             const id = this.calculateOverflow(rect);
@@ -85,7 +93,10 @@ export class DragList extends React.Component<DragListProps, DragListState>{
                 items.splice(replaceIndex, 0, source);
                 this.setState({
                     items: items
-                })
+                });
+                if(this.props.onChange && emit) {
+                    this.props.onChange(items);
+                }
             }
         }
     }
@@ -124,7 +135,7 @@ export class DragList extends React.Component<DragListProps, DragListState>{
     render() {
         const renderItems = this.state.items.map((item: DragItemModel) => {
             return <DragItem logic={this.logic} id={item.id} key={item.id}>
-                {this.props.itemRender(item)}
+                {this.props.itemRenderer(item)}
             </DragItem>;
         })
 
