@@ -28,7 +28,7 @@ export default function DemoHook() {
         },
     ])
 
-    const itemRender = (item) => {
+    const itemRenderer = (item) => {
         return <div className='demo'>
             <span>{item.name}</span>
             <img className='demo-img' key={item.id} src={item.img} alt=""/>
@@ -36,7 +36,7 @@ export default function DemoHook() {
     }
 
     return (
-        <DragList items={items} itemRender={itemRender}></DragList>
+        <DragList items={items} itemRenderer={itemRender}></DragList>
     );
 }
 

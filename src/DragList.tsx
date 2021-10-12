@@ -51,7 +51,8 @@ export class DragList extends React.Component<DragListProps, DragListState>{
         this.state = {
             styles: {
                 'display': 'inline-flex',
-                'flexDirection': props.mode === 'vertical' ? 'column' : 'row'
+                'flexDirection': props.mode === 'vertical' ? 'column' : 'row',
+                'position': 'relative'
             },
             dragItemId: -1,
             items: [...props.items]
@@ -80,7 +81,7 @@ export class DragList extends React.Component<DragListProps, DragListState>{
 
     handleDraggingUp(rect: DOMRect, emit: boolean = true) {
         const current = this.logic.currentDragItem;
-        if(this.logic.dragItems.length > 1) {
+        if(current) {
             const id = this.calculateOverflow(rect);
 
             if(id && current) {

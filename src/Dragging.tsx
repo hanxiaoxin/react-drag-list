@@ -16,7 +16,10 @@ export class DraggingItem extends React.Component<DraggingProps, DraggingState> 
         position: 'absolute'
     };
 
-    public current: DragItem| undefined;
+    dragPosition =  {
+        offsetLeft: 0,
+        offsetTop: 0
+    };
 
     public rememberDrag = {
         offset: {
@@ -38,9 +41,9 @@ export class DraggingItem extends React.Component<DraggingProps, DraggingState> 
         this.handleUp = this.handleUp.bind(this);
         this.handleMove = this.handleMove.bind(this);
 
-        this.props.logic.on('mouseDown', this.handleDown);
-        window.document.addEventListener('mouseup', this.handleUp);
-        window.document.addEventListener('mousemove', this.handleMove);
+        this.props.logic.on('mouseDown', (e) => this.handleDown(e));
+        this.props.logic.on('mouseUp', (e) => this.handleUp(e));
+        this.props.logic.on('mouseMove', (e) => this.handleMove(e));
     }
 
     componentDidMount() {
@@ -55,42 +58,43 @@ export class DraggingItem extends React.Component<DraggingProps, DraggingState> 
         this.setState({
             current: current.props.children
         });
-        this.current = current;
-        this.rememberDrag.offset.x = current.rect.left;
-        this.rememberDrag.offset.y = current.rect.top;
+
+        this.dragPosition.offsetLeft = current.rect.offsetLeft;
+        this.dragPosition.offsetTop = current.rect.offsetTop;
+
         this.rememberDrag.dragStart.x = current.dragStart.x;
         this.rememberDrag.dragStart.y = current.dragStart.y;
-        this.props.logic.currentDragItem = current;
+
         this.setPosition({
-            x: 0,
-            y: this.rememberDrag.offset.y
+            x: this.dragPosition.offsetLeft,
+            y: this.dragPosition.offsetTop
         });
     }
 
+    /**
+     * 拖拽结束，进入处理
+     * @param e
+     */
     handleUp(e: MouseEvent) {
-       if(this.current) {
-           const dom = ReactDOM.findDOMNode(this) as Element;
-           const domRect = dom.getBoundingClientRect();
-           this.props.logic.emit('draggingUp', domRect);
-           this.current.isDragging = false;
-           this.setState({
-               current: null
-           });
-       }
+        const dom = ReactDOM.findDOMNode(this) as Element;
+        const domRect = dom.getBoundingClientRect();
+        this.props.logic.emit('draggingUp', domRect);
+        this.setState({
+            current: null
+        });
     }
 
     handleMove(e: MouseEvent) {
-        if(this.current && this.current.isDragging) {
-           const target = e.target as HTMLElement;
-           const newPosition = {
-                x: (e.clientX - this.rememberDrag.dragStart.x)    ,
-                y: (e.clientY - this.rememberDrag.dragStart.y)
-           };
-           // console.log(newPosition)
-           this.setPosition(newPosition);
-           const domRect = target.getBoundingClientRect();
-           this.props.logic.emit('draggingMove', domRect);
-        }
+        const target = e.target as HTMLElement;
+        // 拖拽的时候item位置会重新计算，所以需要使用之前的位置
+        const newPosition = {
+            x: this.dragPosition.offsetLeft + (e.clientX - this.rememberDrag.dragStart.x)    ,
+            y: this.dragPosition.offsetTop + (e.clientY - this.rememberDrag.dragStart.y)
+        };
+        // console.log(newPosition)
+        this.setPosition(newPosition);
+        const domRect = target.getBoundingClientRect();
+        this.props.logic.emit('draggingMove', domRect);
     }
 
     setPosition(position: Point) {
@@ -101,10 +105,6 @@ export class DraggingItem extends React.Component<DraggingProps, DraggingState> 
             dom.style.left = position.x + 'px';
             dom.style.top = position.y + 'px';
         }
-    }
-
-    componentWillUnmount() {
-        window.document.removeEventListener('mouseup', this.handleUp);
     }
 
     render() {
