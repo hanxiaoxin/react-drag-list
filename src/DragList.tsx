@@ -81,6 +81,12 @@ export class DragList extends React.Component<DragListProps, DragListState>{
 
     handleDraggingUp(rect: DOMRect, emit: boolean = true) {
         const current = this.logic.currentDragItem;
+        const items = [...this.state.items];
+
+        if(this.props.onChange && emit) {
+            this.props.onChange(items);
+        }
+
         if(current) {
             const id = this.calculateOverflow(rect);
 
@@ -88,16 +94,12 @@ export class DragList extends React.Component<DragListProps, DragListState>{
                 const currentIndex = this.state.items.findIndex(item => item.id === current.props.id);
                 const replaceIndex = this.state.items.findIndex(item => item.id === id);
                 // console.log(currentIndex, replaceIndex, this.logic.dragItems)
-                const items = [...this.state.items];
                 const source = this.state.items[currentIndex];
                 items.splice(currentIndex, 1);
                 items.splice(replaceIndex, 0, source);
                 this.setState({
                     items: items
                 });
-                if(this.props.onChange && emit) {
-                    this.props.onChange(items);
-                }
             }
         }
     }

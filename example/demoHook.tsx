@@ -29,7 +29,11 @@ export default function DemoHook() {
         </div>;
     }
 
+    const onChange = (items: any[]) => {
+        console.log(items);
+    }
+
     return (
-        <DragList items={items} itemRenderer={itemRenderer}></DragList>
+        <DragList items={items} itemRenderer={itemRenderer} onChange={onChange}></DragList>
     );
 }
