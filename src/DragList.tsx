@@ -115,18 +115,21 @@ export class DragList extends React.Component<DragListProps, DragListState>{
         const rectLeft = rect.left;
         const rectTop = rect.top;
 
-        // console.log(rect);
-
         for(const drag of dragItems) {
             const W = rectW + rectW - (Math.max((rectLeft + rectW), (drag.rect.left + rectW)) - Math.min(rectLeft, drag.rect.left));
             const H = rectH + rectH - (Math.max((rectTop + rectH), (drag.rect.top + rectH)) - Math.min(rectTop, drag.rect.top));
-            drag.area = W * H;
-            // console.log(rect, drag,  drag.area);
+
+            if(W >0 && H > 0) {
+                drag.area = W * H;
+            } else {
+                drag.area = 0;
+            }
         }
+
 
         let max = 0,id = undefined;
         for(let i = 0; i<dragItems.length; i++) {
-            if(dragItems[i].area > max) {
+            if(dragItems[i].area > 0 && dragItems[i].area > max) {
                 max = dragItems[i].area;
                 id = dragItems[i].props.id;
             }

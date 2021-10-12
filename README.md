@@ -1,4 +1,4 @@
-### apusic-react-drag-list
+### react-drag-list
 
 > npm install @nankle/react-drag-list
 
@@ -41,3 +41,8 @@ export default function DemoHook() {
 }
 
 ```
+
+
+### demo
+
+![示例](./example/assets/drag.gif)
